@@ -5,7 +5,7 @@ public class TableIdentifier : MonoBehaviour
 {
     [Header("Table Setup")]
     public int tableNumber;
-    public bool chosen = false;
+    [SerializeField]private bool chosen = false;
 
     [Header("Drink Movement Stages")]
     public Transform[] beforeGoToTable;   // Intermediate positions
@@ -14,11 +14,11 @@ public class TableIdentifier : MonoBehaviour
     [Header("Visual Indicators")]
     public GameObject[] indicator;
 
-    [Header("Material Settings")]
-    public MeshRenderer meshRenderer;
-    public Material defaultMaterial;
+    //[Header("Material Settings")]
+    //public MeshRenderer meshRenderer;
+    //public Material defaultMaterial;
 
-    [Header("Dependencies")]
+    //[Header("Dependencies")]
     
     public GameObject player;
 
@@ -44,7 +44,11 @@ public class TableIdentifier : MonoBehaviour
         if (!other.CompareTag("TrayTag")) return;
 
     }
-    
+
+    public void ChosenAccepter()
+    {
+        chosen = true;
+    }
     private IEnumerator MoveSmoothly(Transform obj, Vector3 targetPos, Quaternion targetRot, float duration)
     {
         float elapsed = 0f;

@@ -20,10 +20,12 @@ public class TableRandomizer : MonoBehaviour
     {
         List<Transform> availablePositions = new List<Transform>(spawnPoints);
         int spawnCount = Mathf.Min(numberOfTables, availablePositions.Count);
-
+        
+        int chosenID = Random.Range(1, spawnCount + 1);
+        
         for (int i = 0; i < spawnCount; i++)
         {
-            int index = Random.Range(0, availablePositions.Count);
+            int index = Random.Range(0, availablePositions.Count );
             Transform chosenSpot = availablePositions[index];
 
             GameObject table = Instantiate(tablePrefab, chosenSpot.position, chosenSpot.rotation);
@@ -35,7 +37,14 @@ public class TableRandomizer : MonoBehaviour
                 tableID.tableNumber = i + 1;
             }
 
+            if (chosenID == tableID.tableNumber)
+            {
+                tableID.ChosenAccepter();
+            }
+
             availablePositions.RemoveAt(index);
         }
+        
+        
     }
 }
