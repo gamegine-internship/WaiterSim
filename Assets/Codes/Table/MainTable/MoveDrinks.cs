@@ -145,16 +145,28 @@ public class MoveDrinks : MonoBehaviour
             if (zTilt > 180f) zTilt -= 360f;
 
             float slideOffset = -zTilt * slideSensitivity;
-            Vector3 rightDir = trayTransform.right;
-            Vector3 targetPos = trayPoint.position + rightDir * slideOffset;
 
-            float dynamicSpeed = Mathf.Clamp(Mathf.Abs(zTilt) * slideFollowSpeed, minSlideSpeed, maxSlideSpeed);
+            if (slideOffset > 0.2f)
+            {
+                MeshCollider collider = glass.GetComponent<MeshCollider>();
+                collider.enabled = false;
+                
+                Rigidbody rb = glass.GetComponent<Rigidbody>();
+                rb.isKinematic = false;
+                //glass falls
+                return;
+            }
+            else
+            {
+                Vector3 rightDir = trayTransform.right;
+                Vector3 targetPos = trayPoint.position + rightDir * slideOffset;
 
-            glass.transform.position = Vector3.Lerp(
-                glass.transform.position,
-                targetPos,
-                Time.deltaTime * dynamicSpeed
-            );
+                float dynamicSpeed = Mathf.Clamp(Mathf.Abs(zTilt) * slideFollowSpeed, minSlideSpeed, maxSlideSpeed);
+
+                glass.transform.position = Vector3.Lerp( glass.transform.position, targetPos, Time.deltaTime * dynamicSpeed); 
+            }
+            
+            
         }
     }
 
